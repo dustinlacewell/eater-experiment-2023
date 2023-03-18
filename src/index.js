@@ -56,13 +56,38 @@ class Plant extends Entity {
   }
 }
 
+const ENTITIES = [
+  undefined,
+  "edge",
+  "plant",
+  "eater"
+]
+
+const ACTIONS = [
+  "forward",
+  "turn right",
+  "turn left",
+  "turn around",
+  "wait"
+]
+
+const randomAction = () => {
+  return ACTIONS[(Math.floor(Math.random() * ACTIONS.length))]
+}
+
 class Logic {
   constructor() {
     this.brain = {
-      edge: "turn left",
-      undefined: "forward",
-      plant: "turn right",
-      eater: "turn right"
+      edge: "wait",
+      undefined: "wait",
+      plant: "wait",
+      eater: "wait"
+    }
+  }
+
+  randomize() {
+    for (let i = 0; i < ENTITIES.length; i++) {
+      this.brain[entities[i]] = randomAction
     }
   }
 
@@ -86,7 +111,8 @@ class Eater extends Entity {
   constructor(sim, x, y) {
     super(sim, x, y)
     this.direction = Math.floor(Math.random() * 4)
-    this.logic = new Logic();
+    this.logic = new Logic()
+    this.logic.randomize()
   }
 
   getId() {
@@ -109,8 +135,26 @@ class Eater extends Entity {
         break
       case "turn right":
         // turn right
-        this.direction = 1
+        this.turn(1)
         break
+      case "turn left":
+        this.turn(-1)
+        break
+      case "turn around":
+        this.turn(2);
+        break
+      case "wait":
+        break
+    }
+  }
+
+  turn(a) {
+    this.direction -= a
+    if (this.direction < 0) {
+      this.direction += 4
+    }
+    if (this.direction > 3) {
+      this.direction -= 4
     }
   }
 

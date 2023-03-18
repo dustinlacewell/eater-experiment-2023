@@ -59,6 +59,7 @@ class Plant extends Entity {
 class Logic {
   constructor() {
     this.brain = {
+      edge: "turn left",
       undefined: "forward",
       plant: "turn right",
       eater: "turn right"
@@ -69,6 +70,8 @@ class Logic {
     switch (entityLookingAt) {
       case undefined:
         return this.brain.undefined;
+      case "edge":
+        return this.brain.edge;
       case "plant":
         return this.brain.plant;
       case "eater":
@@ -93,7 +96,7 @@ class Eater extends Entity {
   update() {
     const tile = this.sim.tiles[this.x][this.y]
     const tileLookingAt = this.getTileLookingAt()
-    const action = this.logic.getAction(tileLookingAt.entity)
+    let action = tileLookingAt ? this.logic.getAction(tileLookingAt.entity): this.logic.getAction("edge")
     switch (action) {
       case "forward":
         // move forward

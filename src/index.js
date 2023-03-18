@@ -65,8 +65,8 @@ class Logic {
     }
   }
 
-  getAction(tileLookingAt) {
-    switch (tileLookingAt) {
+  getAction(entityLookingAt) {
+    switch (entityLookingAt) {
       case undefined:
         return this.brain.undefined;
       case "plant":
@@ -93,7 +93,7 @@ class Eater extends Entity {
   update() {
     const tile = this.sim.tiles[this.x][this.y]
     const tileLookingAt = this.getTileLookingAt()
-    const action = this.logic.getAction(tileLookingAt)
+    const action = this.logic.getAction(tileLookingAt.entity)
     switch (action) {
       case "forward":
         // move forward

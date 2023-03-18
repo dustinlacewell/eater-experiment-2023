@@ -87,7 +87,7 @@ class Logic {
 
   randomize() {
     for (let i = 0; i < ENTITIES.length; i++) {
-      this.brain[entities[i]] = randomAction()
+      this.brain[ENTITIES[i]] = randomAction()
     }
   }
 

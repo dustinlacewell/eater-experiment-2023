@@ -56,12 +56,34 @@ class Plant extends Entity {
   }
 }
 
+class Logic {
+  constructor() {
+    this.brain = {
+      undefined: "forward",
+      plant: "turn right",
+      eater: "turn right"
+    }
+  }
+
+  getAction(tileLookingAt) {
+    switch (tileLookingAt) {
+      case undefined:
+        return this.brain.undefined;
+      case "plant":
+        return this.brain.plant;
+      case "eater":
+        return this.brain.eater;
+    }
+  }
+}
+
 // each update, either moves in current direction or changes direction or waits
 // wont move if there is another eater in the way
 class Eater extends Entity {
   constructor(sim, x, y) {
     super(sim, x, y)
     this.direction = Math.floor(Math.random() * 4)
+    this.logic = new Logic();
   }
 
   getId() {
@@ -71,11 +93,10 @@ class Eater extends Entity {
   update() {
     const tile = this.sim.tiles[this.x][this.y]
     const tileLookingAt = this.getTileLookingAt()
-
-    const action = Math.floor(Math.random() * 3)
+    const action = this.logic.getAction(tileLookingAt)
     switch (action) {
-      case 0:
-        // move
+      case "forward":
+        // move forward
         if (tileLookingAt !== undefined && tileLookingAt.entity === undefined) {
           tileLookingAt.entity = tile.entity
           tile.entity = undefined
@@ -83,12 +104,9 @@ class Eater extends Entity {
           this.y = tileLookingAt.y
         }
         break
-      case 1:
-        // change direction
-        this.direction = Math.floor(Math.random() * 4)
-        break
-      case 2:
-        // wait
+      case "turn right":
+        // turn right
+        this.direction = 1
         break
     }
   }

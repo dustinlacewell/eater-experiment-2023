@@ -2,7 +2,7 @@ var c = document.getElementById("canvas");
 var ctx = c.getContext("2d");
 
 const SIM_SIZE = 100;
-const UPDATE_DELAY = 250; // ms
+const UPDATE_DELAY = 100; // ms
 
 const PLANT_DENSITY = 0.1;
 const EATER_DENSITY = 0.025;

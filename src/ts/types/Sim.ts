@@ -9,10 +9,14 @@ export class Sim {
     m: number;
     entities: Entity[];
     tiles: Tile[][];
+    round: number
+    generation: number
 
     constructor(size: number) {
         this.n = size;
         this.m = size;
+        this.round = 0
+        this.generation = 0
         this.entities = [];
         this.tiles = new Array(size);
         for (let x = 0; x < size; x++) {
@@ -21,7 +25,6 @@ export class Sim {
                 this.tiles[x][y] = new Tile(x, y);
             }
         }
-
         this.randomizePlants();
         this.randomizeEaters();
     }
@@ -76,6 +79,10 @@ export class Sim {
     }
 
     update() {
+        if (this.round === 1000) {
+            
+        }
+        this.round++
         for (let entity of this.entities) {
             entity.update();
         }
@@ -89,5 +96,17 @@ export class Sim {
         }
 
         return col[y]
+    }
+
+    reset() {
+        const parents: Eater[] = []
+        for (let entity of this.entities) {
+            if (entity.id === ENTITIES.eater) {
+                parents.push(entity)
+            }
+        }
+        this.randomizePlants();
+        this.randomizeEaters();
+
     }
 }

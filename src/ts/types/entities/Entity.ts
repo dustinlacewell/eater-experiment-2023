@@ -5,6 +5,7 @@ export class Entity {
     sim: Sim;
     x: number;
     y: number;
+    id = ENTITIES.edge
 
     constructor(sim: Sim, x: number, y: number) {
         this.sim = sim

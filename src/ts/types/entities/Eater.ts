@@ -8,6 +8,7 @@ export class Eater extends Entity {
     direction: DirectionValue;
     logic: Logic;
     score: number;
+    id = ENTITIES.eater
 
     constructor(sim: Sim, x: number, y: number) {
         super(sim, x, y)
@@ -18,7 +19,7 @@ export class Eater extends Entity {
     }
 
     getId() {
-        return ENTITIES.eater
+        return this.id
     }
 
     update() {
@@ -34,7 +35,7 @@ export class Eater extends Entity {
                 }
 
                 // move forward
-                if (tileLookingAt !== undefined) {
+                if (tileLookingAt !== undefined && entityLookingAt !== ENTITIES.eater) {
                     this.sim.killEntity(this.x, this.y)
                     this.sim.killEntity(tileLookingAt.x, tileLookingAt.y)
                     this.sim.addEntity(tileLookingAt.x, tileLookingAt.y, this)

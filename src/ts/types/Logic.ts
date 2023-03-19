@@ -10,12 +10,34 @@ function createDecision(maxBrains: number) {
 export type Brain = Record<EntityName, Decision>
 
 function createBrain(maxBrains: number) {
-    return ({
-    [ENTITIES.empty]: createDecision(maxBrains),
-    [ENTITIES.edge]: createDecision(maxBrains),
-    [ENTITIES.plant]: createDecision(maxBrains),
-    [ENTITIES.eater]: createDecision(maxBrains)
-    })
+    const brain: Partial<Brain> = {}
+    for (let entity_name of ENTITY_NAMES) {
+        brain[entity_name] = createDecision(maxBrains)
+    }
+    return brain as Brain
+}
+
+function mergeDecisions(brain1: Brain, brain2: Brain, maxBrains: number) {
+    const mergedBrain: Partial<Brain> = {}
+    const randomIndex = Math.floor(Math.random() * ENTITY_NAMES.length)
+    for (let i = 0; i < ENTITY_NAMES.length; i++) {
+        let entity_name = ENTITY_NAMES[i]
+        if (i < randomIndex) {
+            mergedBrain[entity_name] = brain1[entity_name]
+        } else {
+            mergedBrain[entity_name] = brain2[entity_name]
+        }
+    }
+    return mergedBrain as Brain
+}
+
+function mergeBrains(mom: Array<Brain>, dad: Array<Brain>, maxBrains: number) {
+    const mergedBrains: Array<Brain> = []
+    for (let i = 0; i < maxBrains; i++) {
+        const mergedBrain = mergeDecisions(mom[i], dad[i], maxBrains)
+        mergedBrains.push(mergedBrain)
+    }
+    return mergedBrains
 }
 
 

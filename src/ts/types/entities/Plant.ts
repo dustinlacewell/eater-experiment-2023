@@ -3,7 +3,8 @@ import { Entity } from "./Entity";
 
 
 export class Plant extends Entity {
+    id = ENTITIES.plant
     getId() {
-        return ENTITIES.plant
+        return this.id
     }
 }

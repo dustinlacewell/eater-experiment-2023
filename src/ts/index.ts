@@ -9,6 +9,7 @@ const sim = new Sim(SIM_SIZE);
 const renderer = new Renderer(c, ctx, sim);
 
 const update = () => {
+  sim.update();
   setTimeout(update, UPDATE_DELAY);
 };
 setTimeout(update, UPDATE_DELAY);

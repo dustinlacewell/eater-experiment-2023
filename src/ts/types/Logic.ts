@@ -1,4 +1,4 @@
-import { ACITONS, ActionValue, ENTITIES, EntityName, ENTITY_NAMES } from "../consts";
+import { ACTIONS, ActionValue, ENTITIES, EntityName, ENTITY_NAMES } from "../consts";
 import { randomAction } from "../utils";
 
 export class Logic {
@@ -6,10 +6,10 @@ export class Logic {
 
     constructor() {
         this.brain = {
-            [ENTITIES.empty]: ACITONS.forward,
-            [ENTITIES.edge]: ACITONS.right,
-            [ENTITIES.plant]: ACITONS.forward,
-            [ENTITIES.eater]: ACITONS.around
+            [ENTITIES.empty]: ACTIONS.forward,
+            [ENTITIES.edge]: ACTIONS.right,
+            [ENTITIES.plant]: ACTIONS.forward,
+            [ENTITIES.eater]: ACTIONS.left
         }
     }
 

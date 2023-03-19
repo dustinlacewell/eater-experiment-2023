@@ -33,7 +33,7 @@ export type EntityValue = Entities[EntityName];
 export const ENTITY_NAMES = Object.keys(ENTITIES) as EntityName[];
 export const ENTITY_VALUES = Object.values(ENTITIES) as EntityValue[];
 
-export const ACITONS = {
+export const ACTIONS = {
     forward: "forward",
     right: "turn right",
     left: "turn left",
@@ -41,9 +41,9 @@ export const ACITONS = {
     wait: "wait"
 } as const
 
-export type Actions = typeof ACITONS;
+export type Actions = typeof ACTIONS;
 export type ActionName = keyof Actions;
 export type ActionValue = Actions[ActionName];
 
-export const ACTION_NAMES = Object.keys(ACITONS) as ActionName[];
-export const ACTION_VALUES = Object.values(ACITONS) as ActionValue[];
+export const ACTION_NAMES = Object.keys(ACTIONS) as ActionName[];
+export const ACTION_VALUES = Object.values(ACTIONS) as ActionValue[];

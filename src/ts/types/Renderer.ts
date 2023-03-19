@@ -25,7 +25,7 @@ export class Renderer {
                 return
             }
 
-            switch (tile.entity.getId()) {
+            switch (tile.entity.id) {
                 case "plant":
                     // fill square
                     this.ctx.fillStyle = "green";

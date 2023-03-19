@@ -18,10 +18,6 @@ export class Eater extends Entity {
         this.score = 0
     }
 
-    getId() {
-        return this.id
-    }
-
     update() {
         const tileLookingAt = this.getTileLookingAt()
         const entityLookingAt = this.getEntityLookingAt()
@@ -82,6 +78,6 @@ export class Eater extends Entity {
 
     getEntityLookingAt() {
         const tile = this.getTileLookingAt()
-        return tile === undefined ? ENTITIES.edge : tile.entity === null ? ENTITIES.empty : tile.entity.getId()
+        return tile === undefined ? ENTITIES.edge : tile.entity === null ? ENTITIES.empty : tile.entity.id
     }
 }

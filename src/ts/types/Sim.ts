@@ -1,4 +1,4 @@
-import { PLANT_DENSITY, EATER_DENSITY } from "../consts";
+import { PLANT_DENSITY, EATER_DENSITY, ENTITIES } from "../consts";
 import { Eater } from "./entities/Eater";
 import { Entity } from "./entities/Entity";
 import { Plant } from "./entities/Plant";
@@ -27,6 +27,14 @@ export class Sim {
         }
         this.randomizePlants();
         this.randomizeEaters();
+    }
+
+    get eaters() {
+        return this.entities.filter((e) => e.id === ENTITIES.eater) as Eater[]
+    }
+
+    get plants() {
+        return this.entities.filter((e) => e.id === ENTITIES.plant) as Plant[]
     }
 
     addEntity(x: number, y: number, entity: Entity) {
@@ -80,7 +88,7 @@ export class Sim {
 
     update() {
         if (this.round === 1000) {
-            
+
         }
         this.round++
         for (let entity of this.entities) {
@@ -99,12 +107,8 @@ export class Sim {
     }
 
     reset() {
-        const parents: Eater[] = []
-        for (let entity of this.entities) {
-            if (entity.id === ENTITIES.eater) {
-                parents.push(entity)
-            }
-        }
+        // use this.eaters and this.plants
+
         this.randomizePlants();
         this.randomizeEaters();
 

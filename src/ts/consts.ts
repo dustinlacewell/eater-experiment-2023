@@ -47,3 +47,5 @@ export type ActionValue = Actions[ActionName];
 
 export const ACTION_NAMES = Object.keys(ACTIONS) as ActionName[];
 export const ACTION_VALUES = Object.values(ACTIONS) as ActionValue[];
+
+export const EATER_BRAINS = 8

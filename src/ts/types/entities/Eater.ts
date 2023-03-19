@@ -1,4 +1,4 @@
-import { DirectionValue, DIRECTION_VALUES, ENTITIES } from "../../consts";
+import { DirectionValue, DIRECTION_VALUES, EATER_BRAINS, ENTITIES } from "../../consts";
 import { Logic } from "../Logic";
 import { Sim } from "../Sim";
 import { Entity } from "./Entity";
@@ -12,7 +12,7 @@ export class Eater extends Entity {
     constructor(sim: Sim, x: number, y: number) {
         super(sim, x, y)
         this.direction = DIRECTION_VALUES[Math.floor(Math.random() * 4)]
-        this.logic = new Logic()
+        this.logic = new Logic(EATER_BRAINS)
         //this.logic.randomize()
         this.score = 0
     }
@@ -25,7 +25,7 @@ export class Eater extends Entity {
         const tileLookingAt = this.getTileLookingAt()
         const entityLookingAt = this.getEntityLookingAt()
 
-        let action = this.logic.getAction(entityLookingAt)
+        let action = this.logic.makeDecision(entityLookingAt)
 
         switch (action) {
             case "forward":

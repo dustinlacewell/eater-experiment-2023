@@ -10,6 +10,7 @@ const renderer = new Renderer(c, ctx, sim);
 
 const update = () => {
   sim.update();
+  sim.logStats();
   setTimeout(update, UPDATE_DELAY);
 };
 setTimeout(update, UPDATE_DELAY);

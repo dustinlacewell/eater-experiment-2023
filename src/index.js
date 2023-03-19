@@ -2,7 +2,7 @@ var c = document.getElementById("canvas");
 var ctx = c.getContext("2d");
 
 const SIM_SIZE = 100;
-const UPDATE_DELAY = 100; // ms
+const UPDATE_DELAY = 500; // ms
 
 const PLANT_DENSITY = 0.1;
 const EATER_DENSITY = 0.025;
@@ -78,10 +78,10 @@ const randomAction = () => {
 class Logic {
   constructor() {
     this.brain = {
-      edge: "wait",
-      undefined: "wait",
-      plant: "wait",
-      eater: "wait"
+      edge: "turn left",
+      undefined: "turn left",
+      plant: "turn left",
+      eater: "turn left"
     }
   }
 
@@ -112,7 +112,8 @@ class Eater extends Entity {
     super(sim, x, y)
     this.direction = Math.floor(Math.random() * 4)
     this.logic = new Logic()
-    this.logic.randomize()
+    //this.logic.randomize()
+    this.score = 0
   }
 
   getId() {
@@ -126,11 +127,14 @@ class Eater extends Entity {
     switch (action) {
       case "forward":
         // move forward
-        if (tileLookingAt !== undefined && tileLookingAt.entity === undefined) {
+        if (tileLookingAt !== undefined && tileLookingAt.entity !== "eater") {
           tileLookingAt.entity = tile.entity
           tile.entity = undefined
           this.x = tileLookingAt.x
           this.y = tileLookingAt.y
+          if (tileLookingAt.entity === "plant") {
+            this.score++
+          }
         }
         break
       case "turn right":
@@ -149,7 +153,7 @@ class Eater extends Entity {
   }
 
   turn(a) {
-    this.direction -= a
+    this.direction += a
     if (this.direction < 0) {
       this.direction += 4
     }
@@ -260,6 +264,37 @@ class Renderer {
           ctx.beginPath();
           ctx.arc(x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth / 2, 0, 2 * Math.PI);
           ctx.fill();
+          switch(tile.entity.direction) {
+            case 0:
+              ctx.fillStyle = "black"
+              ctx.beginPath();
+              ctx.moveTo(x * tileWidth + tileWidth / 2, y * tileWidth + tileWidth / 2);
+              ctx.lineTo(x * tileWidth + tileWidth / 2, y * tileWidth);
+              ctx.stroke();
+              break
+            case 1:
+              ctx.fillStyle = "black"
+              ctx.beginPath();
+              ctx.moveTo(x * tileWidth + tileWidth / 2, y * tileWidth + tileWidth / 2);
+              ctx.lineTo(x * tileWidth + tileWidth, y * tileWidth + tileWidth / 2);
+              ctx.stroke();
+              break
+            case 2:
+              ctx.fillStyle = "black"
+              ctx.beginPath();
+              ctx.moveTo(x * tileWidth + tileWidth / 2, y * tileWidth + tileWidth / 2);
+              ctx.lineTo(x * tileWidth + tileWidth / 2, y * tileWidth + tileWidth);
+              ctx.stroke();
+              break
+            case 3:
+              ctx.fillStyle = "black"
+              ctx.beginPath();
+              ctx.moveTo(x * tileWidth + tileWidth / 2, y * tileWidth + tileWidth / 2);
+              ctx.lineTo(x * tileWidth, y * tileWidth + tileWidth / 2);
+              ctx.stroke();
+              break
+          }
+
           break;
       }
     })

@@ -1,6 +1,6 @@
 
 export const SIM_SIZE = 100;
-export const UPDATE_DELAY = 50; // ms
+export const UPDATE_DELAY = 10; // ms
 
 export const PLANT_DENSITY = 0.1;
 export const EATER_DENSITY = 0.025;

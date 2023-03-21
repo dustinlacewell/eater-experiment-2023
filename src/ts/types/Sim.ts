@@ -1,7 +1,8 @@
-import { PLANT_DENSITY, EATER_DENSITY, ENTITIES } from "../consts";
+import { PLANT_DENSITY, POP_SIZE, ENTITIES, EATER_BRAINS } from "../consts";
 import { Eater } from "./entities/Eater";
 import { Entity } from "./entities/Entity";
 import { Plant } from "./entities/Plant";
+import { Brain, mergeBrains } from "./Logic";
 import { Tile } from "./Tile";
 
 export class Sim {
@@ -65,6 +66,7 @@ export class Sim {
     }
 
     clear() {
+        this.entities = [];
         this.forEach((tile) => {
             tile.entity = null
         })
@@ -79,21 +81,27 @@ export class Sim {
     }
 
     randomizeEaters() {
-        this.forEach((tile, x, y) => {
-            if (Math.random() < EATER_DENSITY) {
-                this.addEntity(x, y, new Eater(this, x, y));
+        for (let i = 0; i < POP_SIZE; i++) {
+            while (true) {
+                let x = Math.floor(Math.random() * this.n)
+                let y = Math.floor(Math.random() * this.m)
+                if (this.tiles[x][y].entity === null) {
+                    this.addEntity(x, y, new Eater(this, x, y))
+                    break
+                } 
             }
-        })
+        } 
     }
 
     update() {
         if (this.round === 1000) {
-
+            this.reset()
         }
         this.round++
         for (let entity of this.entities) {
             entity.update();
         }
+        console.log("New Round")
     }
 
     getTile(x: number, y: number) {
@@ -105,12 +113,35 @@ export class Sim {
 
         return col[y]
     }
-
+       
     reset() {
         // use this.eaters and this.plants
-
+        const newBrains: Array<Brain[]> = []
+        let eaterWeights = []
+        console.log(this.eaters.length)
+        for (let i = 0; i < this.eaters.length; i++) {
+            const eater = this.eaters[i]
+            for (let j = 0; j < eater.score; j++) {
+                eaterWeights.push(i)
+            }
+        }
+        for (let i = 0; i < this.eaters.length; i++) {
+            const momBrain: Brain[] = this.eaters[eaterWeights[Math.floor(Math.random() * eaterWeights.length)]].getBrains()
+            const dadBrain: Brain[] = this.eaters[eaterWeights[Math.floor(Math.random() * eaterWeights.length)]].getBrains()
+            const newBrain: Brain[] = mergeBrains(momBrain, dadBrain, EATER_BRAINS)
+            newBrains.push(newBrain)
+        }
+        this.clear()
         this.randomizePlants();
         this.randomizeEaters();
 
+        console.log(this.eaters.length)
+        for (let i = 0; i < this.eaters.length; i++) {
+            const eater = this.eaters[i]
+            eater.setBrains(newBrains[i])
+            console.log(newBrains[i] === undefined)
+        }
+        this.round = 0
+        this.generation++
     }
 }

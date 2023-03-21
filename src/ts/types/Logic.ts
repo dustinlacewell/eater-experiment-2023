@@ -31,7 +31,7 @@ function mergeDecisions(brain1: Brain, brain2: Brain, maxBrains: number) {
     return mergedBrain as Brain
 }
 
-function mergeBrains(mom: Array<Brain>, dad: Array<Brain>, maxBrains: number) {
+export function mergeBrains(mom: Array<Brain>, dad: Array<Brain>, maxBrains: number) {
     const mergedBrains: Array<Brain> = []
     for (let i = 0; i < maxBrains; i++) {
         const mergedBrain = mergeDecisions(mom[i], dad[i], maxBrains)

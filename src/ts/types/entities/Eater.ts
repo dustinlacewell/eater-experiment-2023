@@ -1,5 +1,5 @@
 import { DirectionValue, DIRECTION_VALUES, EATER_BRAINS, ENTITIES } from "../../consts";
-import { Logic } from "../Logic";
+import { Brain, Logic } from "../Logic";
 import { Sim } from "../Sim";
 import { Entity } from "./Entity";
 
@@ -16,6 +16,14 @@ export class Eater extends Entity {
         this.logic = new Logic(EATER_BRAINS)
         //this.logic.randomize()
         this.score = 0
+    }
+
+    setBrains(brains: Array<Brain>) {
+        this.logic.brains = brains
+    }
+
+    getBrains() {
+        return this.logic.brains
     }
 
     update() {

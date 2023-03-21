@@ -3,7 +3,7 @@ export const SIM_SIZE = 100;
 export const UPDATE_DELAY = 10; // ms
 
 export const PLANT_DENSITY = 0.1;
-export const EATER_DENSITY = 0.025;
+export const POP_SIZE = 200;
 
 export const DIRECTIONS = {
     up: 0,

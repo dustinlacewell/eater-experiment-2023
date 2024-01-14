@@ -40,7 +40,6 @@ export function mergeBrains(mom: Array<Brain>, dad: Array<Brain>, maxBrains: num
     return mergedBrains
 }
 
-
 export class Logic {
     brains: Array<Brain>
     brain: number
@@ -60,6 +59,16 @@ export class Logic {
 
     getDecision(entity_name: EntityName) {
         return this.brains[this.brain][entity_name]
+    }
+
+    mutateBrain(maxBrains: number, chance: number) {
+        for (let i = 0; i < maxBrains; i++) {
+            for (let j = 0; j < ENTITY_NAMES.length; j++) {
+                if (Math.random() < chance) {
+                    this.brains[i][ENTITY_NAMES[j]] = createDecision(maxBrains)
+                }
+            }
+        }
     }
 
 }

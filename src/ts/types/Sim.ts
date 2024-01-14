@@ -1,4 +1,4 @@
-import { PLANT_DENSITY, POP_SIZE, ENTITIES, EATER_BRAINS } from "../consts";
+import { PLANT_DENSITY, POP_SIZE, ENTITIES, EATER_BRAINS, MUTATION_CHANCE } from "../consts";
 import { Eater } from "./entities/Eater";
 import { Entity } from "./entities/Entity";
 import { Plant } from "./entities/Plant";
@@ -94,6 +94,7 @@ export class Sim {
     }
 
     update() {
+        console.log("/1000")
         if (this.round === 1000) {
             this.reset()
         }
@@ -101,7 +102,6 @@ export class Sim {
         for (let entity of this.entities) {
             entity.update();
         }
-        console.log("New Round")
     }
 
     getTile(x: number, y: number) {
@@ -118,13 +118,19 @@ export class Sim {
         // use this.eaters and this.plants
         const newBrains: Array<Brain[]> = []
         let eaterWeights = []
-        console.log(this.eaters.length)
+        let scoreSum = 0;
+        let highScore = 0;
         for (let i = 0; i < this.eaters.length; i++) {
             const eater = this.eaters[i]
+            if (eater.score > highScore) {
+                highScore = eater.score
+            }
             for (let j = 0; j < eater.score; j++) {
                 eaterWeights.push(i)
+                scoreSum++
             }
         }
+        
         for (let i = 0; i < this.eaters.length; i++) {
             const momBrain: Brain[] = this.eaters[eaterWeights[Math.floor(Math.random() * eaterWeights.length)]].getBrains()
             const dadBrain: Brain[] = this.eaters[eaterWeights[Math.floor(Math.random() * eaterWeights.length)]].getBrains()
@@ -135,13 +141,15 @@ export class Sim {
         this.randomizePlants();
         this.randomizeEaters();
 
-        console.log(this.eaters.length)
         for (let i = 0; i < this.eaters.length; i++) {
             const eater = this.eaters[i]
             eater.setBrains(newBrains[i])
-            console.log(newBrains[i] === undefined)
+            eater.logic.mutateBrain(8, MUTATION_CHANCE)
         }
         this.round = 0
         this.generation++
+        console.log("Generation: " + this.generation)
+        console.log("Average score: " + scoreSum / this.eaters.length)
+        console.log("Highest score: " + highScore)
     }
 }

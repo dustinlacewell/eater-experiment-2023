@@ -1,22 +1,39 @@
-import { SIM_SIZE, UPDATE_DELAY } from "./consts";
-import { Renderer } from "./types/Renderer";
-import { Sim } from "./types/Sim";
+import "reflect-metadata"
 
-const c = document.getElementById("canvas") as HTMLCanvasElement;
-const ctx = c.getContext("2d") as CanvasRenderingContext2D;
+import { Container } from "inversify";
 
-const sim = new Sim(SIM_SIZE);
-const renderer = new Renderer(c, ctx, sim);
+import { UPDATE_DELAY } from "./consts";
+import * as services from "./services";
+import * as consts from "./consts";
+import { tokens } from "./tokens";
+import { buildProviderModule } from "inversify-binding-decorators";
+
+const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+const context = canvas.getContext("2d") as CanvasRenderingContext2D;
+
+console.log(canvas)
+console.log(context)
+
+const container = new Container();
+container.bind(tokens.Canvas).toConstantValue(canvas);
+container.bind(tokens.Context).toConstantValue(context);
+container.load(buildProviderModule());
+
+for (const [key, val] of Object.entries(consts)) {
+  console.log(`Binding ${key} to ${val}`);
+  container.bind(Symbol.for(key)).toConstantValue(val);
+}
+
+const app = container.get(services.App);
 
 const update = () => {
-  sim.update();
+  app.update();
   setTimeout(update, UPDATE_DELAY);
 };
 setTimeout(update, UPDATE_DELAY);
 
 const draw = () => {
-  ctx.clearRect(0, 0, c.width, c.height);
-  renderer.draw();
+  app.draw();
   requestAnimationFrame(draw);
 };
 requestAnimationFrame(draw);

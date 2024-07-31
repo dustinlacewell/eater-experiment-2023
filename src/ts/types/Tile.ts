@@ -1,4 +1,4 @@
-import { Entity } from "./entities/Entity";
+import { Entity } from "../services/Sim/entities/Entity";
 
 export class Tile {
     x: number;

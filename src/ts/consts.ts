@@ -1,4 +1,5 @@
 
+export const ROUND_TURNS = 500;
 export const SIM_SIZE = 100;
 export const UPDATE_DELAY = 10; // ms
 
@@ -23,7 +24,8 @@ export const ENTITIES = {
     empty: "empty",
     edge: "edge",
     plant: "plant",
-    eater: "eater"
+    eater: "eater",
+    meater: "meater"
 } as const
 
 export type Entities = typeof ENTITIES;

@@ -1,4 +1,4 @@
-import { EntityValue, ENTITIES, EntityName } from "../../consts";
+import { EntityValue, ENTITIES, EntityName } from "../../../consts";
 import { Sim } from "../Sim";
 
 export class Entity {

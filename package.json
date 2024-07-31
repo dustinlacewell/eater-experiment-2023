@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "dev": "vite",
+    "build": "vite build"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,10 @@
     "typescript": "^5.0.2"
   },
   "dependencies": {
-    "lodash": "^4.17.15"
+    "inversify": "^6.0.2",
+    "inversify-binding-decorators": "^4.0.0",
+    "lodash": "^4.17.15",
+    "reflect-metadata": "^0.1.13",
+    "vite": "^5.3.5"
   }
 }

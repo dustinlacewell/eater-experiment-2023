@@ -59,7 +59,8 @@ export class Logic {
     }
 
     getDecision(entity_name: EntityName) {
-        return this.brains[this.brain][entity_name]
+        const brain = this.brains[this.brain]
+        return brain[entity_name]
     }
 
 }

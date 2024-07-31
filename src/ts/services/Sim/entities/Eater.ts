@@ -1,5 +1,5 @@
-import { DirectionValue, DIRECTION_VALUES, EATER_BRAINS, ENTITIES } from "../../consts";
-import { Brain, Logic } from "../Logic";
+import { DirectionValue, DIRECTION_VALUES, EATER_BRAINS, ENTITIES } from "../../../consts";
+import { Brain, Logic } from "../../../types/Logic";
 import { Sim } from "../Sim";
 import { Entity } from "./Entity";
 
@@ -26,25 +26,41 @@ export class Eater extends Entity {
         return this.logic.brains
     }
 
+    moveForward() {
+        const tile = this.getTileLookingAt()
+
+        if (tile === undefined) {
+            return
+        }
+
+        this.sim.killEntity(this.x, this.y)
+        this.sim.killEntity(tile.x, tile.y)
+        this.sim.addEntity(tile.x, tile.y, this)
+    }
+
     update() {
-        const tileLookingAt = this.getTileLookingAt()
         const entityLookingAt = this.getEntityLookingAt()
 
         let action = this.logic.makeDecision(entityLookingAt)
 
         switch (action) {
             case "forward":
+
+                const blockers = [
+                    ENTITIES.edge,
+                    ENTITIES.eater,
+                    ENTITIES.meater
+                ] as string[]
+
+                if (blockers.includes(entityLookingAt)) {
+                    break
+                }
+
                 if (entityLookingAt === ENTITIES.plant) {
                     this.score++
                 }
 
-                // move forward
-                if (tileLookingAt !== undefined && entityLookingAt !== ENTITIES.eater) {
-                    this.sim.killEntity(this.x, this.y)
-                    this.sim.killEntity(tileLookingAt.x, tileLookingAt.y)
-                    this.sim.addEntity(tileLookingAt.x, tileLookingAt.y, this)
-                }
-
+                this.moveForward()
                 break
             case "turn right":
                 // turn right

@@ -1,4 +1,4 @@
-import { ENTITIES } from "../../consts";
+import { ENTITIES } from "../../../consts";
 import { Entity } from "./Entity";
 
 

@@ -19,5 +19,8 @@
     "inversify-binding-decorators": "^4.0.0",
     "lodash": "^4.17.15",
     "reflect-metadata": "^0.1.13"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.9.5"
   }
 }

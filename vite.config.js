@@ -1,3 +1,3 @@
 export default {
-    base: '/eaters-experiment-2023/'
+    base: '/eater-experiment-2023/'
 }

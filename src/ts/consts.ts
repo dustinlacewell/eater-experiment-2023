@@ -6,6 +6,8 @@ export const UPDATE_DELAY = 10; // ms
 export const PLANT_DENSITY = 0.1;
 export const POP_SIZE = 200;
 
+export const MUTATION_CHANCE = 0.001;
+
 export const DIRECTIONS = {
     up: 0,
     right: 1,
